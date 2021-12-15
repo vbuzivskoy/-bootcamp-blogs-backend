@@ -2,18 +2,23 @@
   "name": "bootcamp-blogs-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vbuzivskoy/bootcamp-blogs-backend.git"
   },
-  "author": "",
+  "author": "BVV",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/vbuzivskoy/bootcamp-blogs-backend/issues"
   },
-  "homepage": "https://github.com/vbuzivskoy/bootcamp-blogs-backend#readme"
+  "homepage": "https://github.com/vbuzivskoy/bootcamp-blogs-backend#readme",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "http-status": "^1.5.0"
+  }
 }
