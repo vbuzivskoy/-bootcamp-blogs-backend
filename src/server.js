@@ -7,18 +7,9 @@ const { compressionMiddleware } = require('./middlewares');
 
 const app = express();
 const port = 3000;
-const frontendPath = path.join(
-  __dirname,
-  '..',
-  '..',
-  'bootcamp-blogs-frontend',
-  'dist',
-  'bootcamp-blogs-frontend'
-);
 
 app.use(compressionMiddleware);
 app.use('/api/v1', apiV1Router);
-app.use('/', express.static(frontendPath));
 
 app.all('*', (req, res) => {
   res.status(NOT_FOUND).json({ message: 'Not found' });
