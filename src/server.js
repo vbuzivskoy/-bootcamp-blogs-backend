@@ -1,12 +1,12 @@
 const express = require('express');
 const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require('http-status');
 
+const { serverPort } = require('./config');
 const { apiV1Router } = require('./routes/api/v1');
 const { compressionMiddleware } = require('./middlewares');
 
 const server = async () => {
   const app = express();
-  const port = 3000;
 
   app.use(compressionMiddleware);
   app.use('/api/v1', apiV1Router);
@@ -21,7 +21,7 @@ const server = async () => {
       .json({ message: err.message || 'Internal server error' });
   });
 
-  app.listen(port, () => {
+  app.listen(serverPort, () => {
     console.log(`App is listning at http://localhost:${port}`);
   });
 };
