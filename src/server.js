@@ -4,8 +4,11 @@ const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require('http-status');
 const { serverPort } = require('./config');
 const { apiV1Router } = require('./routes/api/v1');
 const { compressionMiddleware } = require('./middlewares');
+const { initDb } = require('./db');
 
 const server = async () => {
+  await initDb();
+
   const app = express();
 
   app.use(compressionMiddleware);
@@ -22,7 +25,7 @@ const server = async () => {
   });
 
   app.listen(serverPort, () => {
-    console.log(`App is listning at http://localhost:${port}`);
+    console.log(`App is listning at http://localhost:${serverPort}`);
   });
 };
 
