@@ -1,7 +1,7 @@
-const { NOT_FOUND } = require('http-status');
+const { NotFoundError } = require('../errors');
 
-const notFoundMiddleware = (req, res) => {
-  res.status(NOT_FOUND).json({ message: 'Route not found' });
+const notFoundMiddleware = (req, res, next) => {
+  next(new NotFoundError('Route not found'));
 };
 
 module.exports = {
