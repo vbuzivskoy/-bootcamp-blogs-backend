@@ -1,12 +1,17 @@
 const { UserModel } = require('../models');
+const { InternalError } = require('../errors');
 
 class UserDao {
   constructor(UserModel) {
     this.UserModel = UserModel;
   }
 
-  findUserById(userId) {
-    return this.UserModel.findById(userId);
+  async findUserById(userId) {
+    try {
+      const user = await this.UserModel.findById(userId);
+    } catch (error) {
+      throw new InternalError(`Failed to get a user with id ${userId}`, error);
+    }
   }
 }
 
