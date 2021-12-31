@@ -1,9 +1,13 @@
 const express = require('express');
-const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require('http-status');
+const { NOT_FOUND } = require('http-status');
 
 const { serverPort } = require('./config');
 const { apiV1Router } = require('./routes/api/v1');
-const { compressionMiddleware } = require('./middlewares');
+const {
+  compressionMiddleware,
+  errorHandlerMiddleware,
+  notFoundMiddleware,
+} = require('./middlewares');
 const { initDb } = require('./db');
 
 const server = async () => {
@@ -11,21 +15,18 @@ const server = async () => {
 
   const app = express();
 
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
   app.use(compressionMiddleware);
+
   app.use('/api/v1', apiV1Router);
 
-  app.all('*', (req, res) => {
-    res.status(NOT_FOUND).json({ message: 'Not found' });
-  });
+  app.all('*', notFoundMiddleware);
 
-  app.use((err, req, res, next) => {
-    res
-      .status(INTERNAL_SERVER_ERROR)
-      .json({ message: err.message || 'Internal server error' });
-  });
+  app.use(errorHandlerMiddleware);
 
   app.listen(serverPort, () => {
-    console.log(`App is listning at http://localhost:${serverPort}`);
+    console.log(`App is listening at http://localhost:${serverPort}`);
   });
 };
 
