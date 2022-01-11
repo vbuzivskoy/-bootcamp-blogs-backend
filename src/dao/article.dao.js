@@ -121,7 +121,7 @@ class ArticleDao {
       throw new NotFoundError(`Article with id ${articleId} not found`);
     }
 
-    if (article.author._id._doc !== user._id._doc) {
+    if (!article.author._id.equals(user._id)) {
       throw new AuthorizationError(
         `Forbidden to delete the article with id ${articleId} for the user with id ${user._id}`,
       );
