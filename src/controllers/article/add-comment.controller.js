@@ -1,3 +1,5 @@
+const { CREATED } = require('http-status');
+
 const { articleService } = require('../../services');
 
 const addComment = async (req, res, next) => {
@@ -14,8 +16,8 @@ const addComment = async (req, res, next) => {
       articleId,
       newCommentParams,
     );
-    
-    res.json(comment);
+
+    res.status(CREATED).json(comment);
   } catch (error) {
     next(error);
   }
