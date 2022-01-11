@@ -1,3 +1,5 @@
+const { CREATED } = require('http-status');
+
 const { articleService } = require('../../services');
 
 const addArticle = async (req, res, next) => {
@@ -14,7 +16,7 @@ const addArticle = async (req, res, next) => {
 
     const articles = await articleService.addArticle(newArticleParams);
 
-    res.json(articles);
+    res.status(CREATED).json(articles);
   } catch (error) {
     next(error);
   }
