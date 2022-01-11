@@ -31,6 +31,13 @@ class AuthenticationError extends CustomError {
   }
 }
 
+class ConflictError extends CustomError {
+  constructor(message = 'Confilct', originalError) {
+    super(message, originalError);
+    this.httpStatus = httpStatus.CONFLICT;
+  }
+}
+
 class InternalError extends CustomError {
   constructor(message = 'Internal server error', originalError) {
     super(message, originalError);
@@ -42,5 +49,6 @@ module.exports = {
   NotFoundError,
   AuthorizationError,
   AuthenticationError,
+  ConflictError,
   InternalError,
 };
