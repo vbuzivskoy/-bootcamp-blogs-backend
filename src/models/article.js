@@ -11,4 +11,12 @@ const articleSchema = new Schema({
   comments: [{ type: 'ObjectId', ref: 'Comment' }],
 });
 
+articleSchema.virtual('id').get(function () {
+  return this._id.toHexString();
+});
+
+articleSchema.set('toJSON', {
+  virtuals: true,
+});
+
 module.exports = model('Article', articleSchema);

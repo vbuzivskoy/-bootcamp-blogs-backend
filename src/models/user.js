@@ -16,4 +16,12 @@ userSchema.methods.isPasswordValid = function (password) {
   return this.passwordHash === passwordHash;
 };
 
+userSchema.virtual('id').get(function () {
+  return this._id.toHexString();
+});
+
+userSchema.set('toJSON', {
+  virtuals: true,
+});
+
 module.exports = model('User', userSchema);

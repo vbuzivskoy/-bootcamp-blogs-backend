@@ -10,4 +10,12 @@ const commentSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+commentSchema.virtual('id').get(function () {
+  return this._id.toHexString();
+});
+
+commentSchema.set('toJSON', {
+  virtuals: true,
+});
+
 module.exports = model('Comment', commentSchema);
