@@ -7,6 +7,7 @@ const {
   compressionMiddleware,
   errorHandlerMiddleware,
   notFoundMiddleware,
+  corsMiddleware,
 } = require('./middlewares');
 const { initDb } = require('./db');
 
@@ -18,6 +19,7 @@ const server = async () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(compressionMiddleware);
+  app.use(corsMiddleware);
 
   app.use('/api/v1', apiV1Router);
 
