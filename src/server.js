@@ -1,5 +1,4 @@
 const express = require('express');
-const { NOT_FOUND } = require('http-status');
 
 const { serverPort } = require('./config');
 const { apiV1Router } = require('./routes/api/v1');
