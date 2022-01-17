@@ -23,7 +23,9 @@ class ArticleDao {
     }
 
     try {
-      return await this.ArticleModel.find(filterOptions).populate('author');
+      return await this.ArticleModel.find(filterOptions)
+        .populate('author')
+        .populate('likedBy');
     } catch (error) {
       throw new InternalError('Failed to get aticles', error);
     }
@@ -45,6 +47,7 @@ class ArticleDao {
     try {
       article = await this.ArticleModel.findById(articleId)
         .populate('author')
+        .populate('likedBy')
         .populate({ path: 'comments', populate: { path: 'author' } });
     } catch (error) {
       throw new InternalError(
@@ -61,7 +64,7 @@ class ArticleDao {
   }
 
   async toggleLikeByArticle(articleId, user) {
-    const article = await this.ArticleModel.findById(articleId);
+    const article = await this.findArticleById(articleId);
 
     if (!article) {
       throw new NotFoundError(`Article with id ${articleId} not found`);
@@ -76,7 +79,7 @@ class ArticleDao {
 
       await article.save();
 
-      return article;
+      return article.likedBy;
     } catch (error) {
       throw new InternalError(
         `Failed to like the article with id ${articleId} by the user with id ${user._id}`,
