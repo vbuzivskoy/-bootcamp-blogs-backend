@@ -7,7 +7,7 @@ const articleSchema = new Schema({
   text: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   likedBy: [{ type: 'ObjectId', ref: 'User' }],
-  tags: [String],
+  tags: [{ type: 'ObjectId', ref: 'Tag' }],
   comments: [{ type: 'ObjectId', ref: 'Comment' }],
 });
 
