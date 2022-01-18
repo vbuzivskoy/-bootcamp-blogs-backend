@@ -1,4 +1,4 @@
-const { ArticleModel, CommentModel } = require('../models');
+const { ArticleModel, CommentModel, TagModel } = require('../models');
 const {
   NotFoundError,
   AuthorizationError,
@@ -6,8 +6,10 @@ const {
 } = require('../errors');
 
 class ArticleDao {
-  constructor(ArticleModel) {
+  constructor(ArticleModel, CommentModel, TagModel) {
     this.ArticleModel = ArticleModel;
+    this.CommentModel = CommentModel;
+    this.TagModel = TagModel;
   }
 
   async findArticles(searchOptions) {
@@ -25,7 +27,8 @@ class ArticleDao {
     try {
       return await this.ArticleModel.find(filterOptions)
         .populate('author')
-        .populate('likedBy');
+        .populate('likedBy')
+        .populate('tags');
     } catch (error) {
       throw new InternalError('Failed to get aticles', error);
     }
@@ -35,6 +38,12 @@ class ArticleDao {
     try {
       const newArticle = new this.ArticleModel(articleParams);
       await newArticle.save();
+      await this.TagModel.updateMany(
+        {
+          _id: { $in: newArticle.tags },
+        },
+        { $addToSet: { articles: [newArticle._id] } },
+      );
 
       return newArticle;
     } catch (error) {
@@ -48,7 +57,8 @@ class ArticleDao {
       article = await this.ArticleModel.findById(articleId)
         .populate('author')
         .populate('likedBy')
-        .populate({ path: 'comments', populate: { path: 'author' } });
+        .populate({ path: 'comments', populate: { path: 'author' } })
+        .populate('tags');
     } catch (error) {
       throw new InternalError(
         `Failed to get the article with id ${articleId}`,
@@ -98,7 +108,7 @@ class ArticleDao {
     let newComment;
 
     try {
-      newComment = new CommentModel(commentParams);
+      newComment = new this.CommentModel(commentParams);
       await newComment.save();
     } catch (error) {
       throw new InternalError('Failed to create a new comment', error);
@@ -131,6 +141,13 @@ class ArticleDao {
     }
 
     try {
+      await this.TagModel.updateMany(
+        {
+          _id: { $in: article.tags },
+        },
+        { $pull: { articles: article._id } },
+      );
+      await this.CommentModel.deleteMany({ _id: { $in: article.comments } });
       await this.ArticleModel.findByIdAndDelete(articleId);
     } catch (error) {
       throw new InternalError(
@@ -141,4 +158,4 @@ class ArticleDao {
   }
 }
 
-module.exports = new ArticleDao(ArticleModel);
+module.exports = new ArticleDao(ArticleModel, CommentModel, TagModel);
