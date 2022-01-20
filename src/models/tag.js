@@ -10,6 +10,7 @@ const tagSchema = new Schema(
     },
     articles: [{ type: 'ObjectId', ref: 'Article' }],
   },
+  { versionKey: false },
 );
 
 tagSchema.virtual('id').get(function () {

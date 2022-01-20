@@ -1,14 +1,17 @@
 const { Schema, model } = require('mongoose');
 
-const commentSchema = new Schema({
-  author: {
-    type: 'ObjectId',
-    ref: 'User',
-    required: true,
+const commentSchema = new Schema(
+  {
+    author: {
+      type: 'ObjectId',
+      ref: 'User',
+      required: true,
+    },
+    text: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
   },
-  text: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-});
+  { versionKey: false },
+);
 
 commentSchema.virtual('id').get(function () {
   return this._id.toHexString();
