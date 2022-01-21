@@ -1,19 +1,19 @@
 const { Router } = require('express');
 
 const {
-  signIn,
-  signUp,
-  getCurrentUser,
-  getUserById,
+  signInController,
+  signUpController,
+  getCurrentUserController,
+  getUserByIdController,
 } = require('../../../controllers/user');
 const { authMiddleware } = require('../../../middlewares');
 
 const userRouter = Router();
 
-userRouter.get('/me', authMiddleware, getCurrentUser);
-userRouter.get('/:userId', getUserById);
-userRouter.post('/signin', signIn);
-userRouter.post('/', signUp);
+userRouter.get('/me', authMiddleware, getCurrentUserController);
+userRouter.get('/:userId', getUserByIdController);
+userRouter.post('/signin', signInController);
+userRouter.post('/', signUpController);
 
 module.exports = {
   userRouter,

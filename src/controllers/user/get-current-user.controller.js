@@ -1,4 +1,4 @@
-const getCurrentUser = async (req, res, next) => {
+const getCurrentUserController = async (req, res, next) => {
   const { user } = req;
 
   try {
@@ -8,4 +8,4 @@ const getCurrentUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getCurrentUser };
+module.exports = { getCurrentUserController };

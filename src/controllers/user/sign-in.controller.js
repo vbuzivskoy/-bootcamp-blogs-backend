@@ -1,6 +1,6 @@
 const { userService } = require('../../services');
 
-const signIn = async (req, res, next) => {
+const signInController = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
@@ -12,4 +12,4 @@ const signIn = async (req, res, next) => {
   }
 };
 
-module.exports = { signIn };
+module.exports = { signInController };

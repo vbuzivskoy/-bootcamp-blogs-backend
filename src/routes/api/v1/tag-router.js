@@ -2,16 +2,16 @@ const { Router } = require('express');
 
 const { authMiddleware } = require('../../../middlewares');
 const {
-  findTags,
-  addTag,
+  findTagsController,
+  addTagController,
   getTagByFullNameController,
 } = require('../../../controllers/tag');
 
 const tagRouter = Router();
 
-tagRouter.get('/', findTags);
+tagRouter.get('/', findTagsController);
 tagRouter.get('/:name', getTagByFullNameController);
-tagRouter.post('/', authMiddleware, addTag);
+tagRouter.post('/', authMiddleware, addTagController);
 
 module.exports = {
   tagRouter,

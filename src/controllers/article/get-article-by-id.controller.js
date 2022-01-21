@@ -1,6 +1,6 @@
 const { articleService } = require('../../services');
 
-const getArticleById = async (req, res, next) => {
+const getArticleByIdController = async (req, res, next) => {
   const { articleId } = req.params;
 
   try {
@@ -11,4 +11,4 @@ const getArticleById = async (req, res, next) => {
   }
 };
 
-module.exports = { getArticleById };
+module.exports = { getArticleByIdController };

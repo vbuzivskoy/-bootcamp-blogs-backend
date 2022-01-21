@@ -1,6 +1,6 @@
 const { tagService } = require('../../services');
 
-const findTags = async (req, res, next) => {
+const findTagsController = async (req, res, next) => {
   const { namePart, limit, sort, sortOrder } = req.query;
 
   const searchOptions = {
@@ -22,4 +22,4 @@ const findTags = async (req, res, next) => {
   }
 };
 
-module.exports = { findTags };
+module.exports = { findTagsController };

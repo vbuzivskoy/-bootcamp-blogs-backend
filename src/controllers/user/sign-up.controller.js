@@ -2,7 +2,7 @@ const { CREATED } = require('http-status');
 
 const { userService } = require('../../services');
 
-const signUp = async (req, res, next) => {
+const signUpController = async (req, res, next) => {
   const { firstName, lastName, email, password, avatarUrl } = req.body;
 
   try {
@@ -28,4 +28,4 @@ const signUp = async (req, res, next) => {
   }
 };
 
-module.exports = { signUp };
+module.exports = { signUpController };

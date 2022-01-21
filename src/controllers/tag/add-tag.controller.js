@@ -2,7 +2,7 @@ const { CREATED } = require('http-status');
 
 const { tagService } = require('../../services');
 
-const addTag = async (req, res, next) => {
+const addTagController = async (req, res, next) => {
   const { name } = req.body;
 
   try {
@@ -18,4 +18,4 @@ const addTag = async (req, res, next) => {
   }
 };
 
-module.exports = { addTag };
+module.exports = { addTagController };

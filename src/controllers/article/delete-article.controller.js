@@ -1,6 +1,6 @@
 const { articleService } = require('../../services');
 
-const deleteArticle = async (req, res, next) => {
+const deleteArticleController = async (req, res, next) => {
   const { articleId } = req.params;
   const { user } = req;
 
@@ -15,4 +15,4 @@ const deleteArticle = async (req, res, next) => {
   }
 };
 
-module.exports = { deleteArticle };
+module.exports = { deleteArticleController };

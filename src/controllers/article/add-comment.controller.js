@@ -2,7 +2,7 @@ const { CREATED } = require('http-status');
 
 const { articleService } = require('../../services');
 
-const addComment = async (req, res, next) => {
+const addCommentController = async (req, res, next) => {
   const { articleId } = req.params;
   const { text } = req.body;
 
@@ -23,4 +23,4 @@ const addComment = async (req, res, next) => {
   }
 };
 
-module.exports = { addComment };
+module.exports = { addCommentController };

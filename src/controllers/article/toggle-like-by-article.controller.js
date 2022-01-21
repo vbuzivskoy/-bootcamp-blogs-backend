@@ -1,6 +1,6 @@
 const { articleService } = require('../../services');
 
-const toggleLikeByArticle = async (req, res, next) => {
+const toggleLikeByArticleController = async (req, res, next) => {
   const { articleId } = req.params;
 
   try {
@@ -11,4 +11,4 @@ const toggleLikeByArticle = async (req, res, next) => {
   }
 };
 
-module.exports = { toggleLikeByArticle };
+module.exports = { toggleLikeByArticleController };

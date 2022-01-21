@@ -2,7 +2,7 @@ const { CREATED } = require('http-status');
 
 const { articleService } = require('../../services');
 
-const addArticle = async (req, res, next) => {
+const addArticleController = async (req, res, next) => {
   const { title, description, text, tags } = req.body;
 
   try {
@@ -22,4 +22,4 @@ const addArticle = async (req, res, next) => {
   }
 };
 
-module.exports = { addArticle };
+module.exports = { addArticleController };

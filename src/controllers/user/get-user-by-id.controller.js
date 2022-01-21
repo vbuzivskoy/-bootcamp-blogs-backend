@@ -1,6 +1,6 @@
 const { userService } = require('../../services');
 
-const getUserById = async (req, res, next) => {
+const getUserByIdController = async (req, res, next) => {
   const { userId } = req.params;
 
   try {
@@ -11,4 +11,4 @@ const getUserById = async (req, res, next) => {
   }
 };
 
-module.exports = { getUserById };
+module.exports = { getUserByIdController };

@@ -1,6 +1,6 @@
 const { articleService } = require('../../services');
 
-const getArticles = async (req, res, next) => {
+const getArticlesController = async (req, res, next) => {
   const { tag, author } = req.query;
   const searchOptions = { tag, author };
 
@@ -13,4 +13,4 @@ const getArticles = async (req, res, next) => {
   }
 };
 
-module.exports = { getArticles };
+module.exports = { getArticlesController };
