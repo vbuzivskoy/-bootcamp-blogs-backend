@@ -44,7 +44,7 @@ class TagDao {
     }
   }
 
-  async getTagByFullName(name) {
+  async getTagByName(name) {
     let tag;
     try {
       tag = await this.TagModel.findOne({ name });
