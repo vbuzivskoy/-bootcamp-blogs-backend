@@ -1,9 +1,10 @@
 const { tagService } = require('../../services');
 
 const findTags = async (req, res, next) => {
-  const { name, limit, sort, sortOrder } = req.query;
+  const { namePart, limit, sort, sortOrder } = req.query;
+
   const searchOptions = {
-    namePart: name,
+    namePart,
     sort,
     sortOrder,
   };

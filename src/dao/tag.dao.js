@@ -1,5 +1,5 @@
 const { TagModel } = require('../models');
-const { InternalError, ConflictError } = require('../errors');
+const { InternalError, ConflictError, NotFoundError } = require('../errors');
 const {
   mongooseDuplicateKeyErrorCode,
   defaultTagSort,
@@ -42,6 +42,24 @@ class TagDao {
     } catch (error) {
       throw new InternalError('Failed to get tags', error);
     }
+  }
+
+  async getTagByFullName(name) {
+    let tag;
+    try {
+      tag = await this.TagModel.findOne({ name });
+    } catch (error) {
+      throw new InternalError(
+        `Failed to get the tag with name "${name}"`,
+        error,
+      );
+    }
+
+    if (!tag) {
+      throw new NotFoundError(`Tag with name "${name}" not found`);
+    }
+
+    return tag;
   }
 
   async addTag(tagParams) {
