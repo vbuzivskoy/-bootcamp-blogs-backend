@@ -81,7 +81,7 @@ class ArticleDao {
     }
 
     try {
-      if (article.likedBy.some((user) => user.equals(user._id))) {
+      if (article.likedBy.some((votedUser) => votedUser.equals(user._id))) {
         article.likedBy.pop(user);
       } else {
         article.likedBy.push(user);
