@@ -1,8 +1,8 @@
 const { articleService } = require('../../services');
 
 const getArticlesController = async (req, res, next) => {
-  const { tag, author } = req.query;
-  const searchOptions = { tag, author };
+  const { tag, author, sort, sortOrder } = req.query;
+  const searchOptions = { tag, author, sort, sortOrder };
 
   try {
     const articles = await articleService.getArticles(searchOptions);

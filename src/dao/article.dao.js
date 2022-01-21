@@ -1,9 +1,23 @@
-const { ArticleModel, CommentModel, TagModel } = require('../models');
+const {
+  Types: { ObjectId },
+} = require('mongoose');
+
+const {
+  ArticleModel,
+  CommentModel,
+  TagModel,
+  UserModel,
+} = require('../models');
 const {
   NotFoundError,
   AuthorizationError,
   InternalError,
 } = require('../errors');
+const {
+  defaultArticleSortFieldName,
+  likedByListSizeFieldName,
+  sortFieldMap,
+} = require('../common/const');
 
 class ArticleDao {
   constructor(ArticleModel, CommentModel, TagModel) {
@@ -13,22 +27,44 @@ class ArticleDao {
   }
 
   async findArticles(searchOptions) {
-    const { author, tag } = searchOptions;
+    const {
+      author,
+      tag,
+      sort = defaultArticleSortFieldName,
+      sortOrder = 'desc',
+    } = searchOptions;
 
     const filterOptions = {};
     if (author) {
-      filterOptions.author = author;
+      filterOptions.author = ObjectId(author);
     }
 
     if (tag) {
-      filterOptions.tags = tag;
+      filterOptions.tags = ObjectId(tag);
     }
 
+    const sortFieldName = sortFieldMap[sort];
+    const sortOptions = {
+      [sortFieldName]: sortOrder,
+    };
+
     try {
-      return await this.ArticleModel.find(filterOptions)
-        .populate('author')
-        .populate('likedBy')
-        .populate('tags');
+      const articles = await this.ArticleModel.aggregate([
+        {
+          $match: filterOptions,
+        },
+      ])
+        .addFields({
+          [likedByListSizeFieldName]: { $size: '$likedBy' },
+          id: '$_id',
+        })
+        .sort(sortOptions);
+
+      await UserModel.populate(articles, { path: 'author' });
+      await UserModel.populate(articles, { path: 'likedBy' });
+      await TagModel.populate(articles, { path: 'tags' });
+
+      return articles;
     } catch (error) {
       throw new InternalError('Failed to get aticles', error);
     }
