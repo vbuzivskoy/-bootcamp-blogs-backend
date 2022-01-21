@@ -118,9 +118,11 @@ class ArticleDao {
 
     try {
       if (article.likedBy.some((votedUser) => votedUser.equals(user._id))) {
-        article.likedBy.pop(user);
+        article.likedBy = article.likedBy.filter(
+          (votedUser) => !votedUser.equals(user._id),
+        );
       } else {
-        article.likedBy.push(user);
+        article.likedBy = [...article.likedBy, user];
       }
 
       await article.save();
