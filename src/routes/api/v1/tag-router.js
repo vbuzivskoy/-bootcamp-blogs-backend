@@ -4,13 +4,13 @@ const { authMiddleware } = require('../../../middlewares');
 const {
   findTagsController,
   addTagController,
-  getTagByFullNameController,
+  getTagByIdController,
 } = require('../../../controllers/tag');
 
 const tagRouter = Router();
 
 tagRouter.get('/', findTagsController);
-tagRouter.get('/:name', getTagByFullNameController);
+tagRouter.get('/:id', getTagByIdController);
 tagRouter.post('/', authMiddleware, addTagController);
 
 module.exports = {

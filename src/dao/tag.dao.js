@@ -62,6 +62,24 @@ class TagDao {
     return tag;
   }
 
+  async getTagById(id) {
+    let tag;
+    try {
+      tag = await this.TagModel.findById(id);
+    } catch (error) {
+      throw new InternalError(
+        `Failed to get the tag with id "${id}"`,
+        error,
+      );
+    }
+
+    if (!tag) {
+      throw new NotFoundError(`Tag with id "${id}" not found`);
+    }
+
+    return tag;
+  }
+
   async addTag(tagParams) {
     try {
       const newTag = new this.TagModel(tagParams);
